@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Student Form{% endblock %}
+{% block content %}
+
+
+<style>
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+label {
+    font-weight: bold;
+}
+
+.btn-submit {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.btn-submit:hover {
+    background-color: #0069d9;
+    color: #fff;
+    border-color: #0062cc;
+}
+
+</style>
+
+
+
+<div class="container">
+<form method="post" id="detailsForm" class="mt-4" data-courses-url="{% url 'ajax_load_courses' %}">
+    <center><h3>Student Form</h3></center>
+    <br>
+    <br>
+    {% csrf_token %}
+    {{ form.as_p }}
+        <a href="{% url 'success' %}" class="btn btn-primary">Submit</a>
+</form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script>
+    function calculateAge() {
+      const dob = new Date(document.getElementById("id_date_of_birth").value);
+      const today = new Date();
+      const ageInMilliseconds = today - dob;
+      const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
+      document.getElementById("id_age").value = Math.floor(ageInYears);
+    }
+    $("#id_department").change(function () {
+        const url = $("#detailsForm").attr("data-courses-url");  // get the url of the `load_cities` view
+        const departmentId = $(this).val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'department_id': departmentId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                console.log(data)
+                $("#id_course").html(data);  // replace the contents of the city input with the data that came from the server
+                /*
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (city) {
+                    html_data += `<option value="${city.id}">${city.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_city").html(html_data);
+                */
+            }
+        });
+
+    });
+</script>
+
+{% endblock %}
