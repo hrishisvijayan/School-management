@@ -31,13 +31,13 @@ label {
 
 
 <div class="container">
-<form method="post" id="detailsForm" class="mt-4" data-courses-url="{% url 'ajax_load_courses' %}">
+<form method="post" id="detailsForm" class="mt-4" data-courses-url="{% url 'ajax_load_courses' %} action="{% url 'success' %}">
     <center><h3>Student Form</h3></center>
     <br>
     <br>
     {% csrf_token %}
     {{ form.as_p }}
-        <a href="{% url 'success' %}" class="btn btn-primary">Submit</a>
+       <input type="submit" value="submit" class="btn btn-primary">
 </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
