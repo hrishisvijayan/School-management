@@ -27,12 +27,16 @@ def login(request):
     return render(request, "login.html")
 
 
+
 def register(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        cpassword = request.POST['password1']
-        if password != cpassword:
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '').strip()
+        cpassword = request.POST.get('password1', '').strip()
+        if not username or not password or not cpassword:
+            messages.info(request, 'Please fill all the fields')
+            return redirect('/register')
+        elif password != cpassword:
             messages.info(request, 'Password does not match')
             return redirect('/register')
         elif User.objects.filter(username=username).exists():
@@ -44,10 +48,6 @@ def register(request):
             return redirect('/login')
     else:
         return render(request, 'register.html')
-
-
-def new_page(request):
-    return render(request, 'new_page.html')
 
 
 def logout(request):
