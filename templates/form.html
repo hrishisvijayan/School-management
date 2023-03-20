@@ -31,8 +31,9 @@ label {
 
 
 <div class="container">
+     <center><h3>Student Form</h3></center>
+    <br>
 <form method="post" id="detailsForm" class="mt-4" data-courses-url="{% url 'ajax_load_courses' %} action="{% url 'success' %}">
-    <center><h3>Student Form</h3></center>
     <br>
     <br>
     {% csrf_token %}
