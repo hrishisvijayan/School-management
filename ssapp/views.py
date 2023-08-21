@@ -71,6 +71,7 @@ def student_details(request):
 
 
 def load_courses(request):
+    print('..........hre we are')
     department_id = request.GET.get('department_id')
     courcess = Course.objects.filter(department_id=department_id).order_by('course')
     return render(request, 'course_dropdown_list_options.html', {'courcess': courcess})

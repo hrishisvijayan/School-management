@@ -33,7 +33,7 @@ label {
 <div class="container">
      <center><h3>Student Form</h3></center>
     <br>
-<form method="post" id="detailsForm" class="mt-4" data-courses-url="{% url 'ajax_load_courses' %} action="{% url 'success' %}">
+<form method="post" id="detailsForm" class="mt-4" data-courses-url="{% url 'ajax_load_courses' %}">
     <br>
     <br>
     {% csrf_token %}
@@ -51,6 +51,7 @@ label {
       document.getElementById("id_age").value = Math.floor(ageInYears);
     }
     $("#id_department").change(function () {
+        console.log('change is hre')
         const url = $("#detailsForm").attr("data-courses-url");  // get the url of the `load_cities` view
         const departmentId = $(this).val();  // get the selected country ID from the HTML input
 
